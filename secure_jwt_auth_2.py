@@ -138,6 +138,13 @@ def main(json_file, private_key_file, service=None):
     client = authorize_jwt_client(private_key_file, service)
     current_user = client.user(user_id=u'me').get()
     print u'Box User:', current_user.name
+    users = client.users()
+    print users
+    user = users[0]
+    print user.id, user.login, user.created_at
+    files = client.as_user(user).folder(0).get_items(10)
+    for file in files:
+        print file.id, file.name
 
 
 if __name__ == u'__main__':
