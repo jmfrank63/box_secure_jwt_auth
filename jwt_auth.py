@@ -15,11 +15,12 @@ from boxsdk import JWTAuth, Client
 JSON_FILE = './.box/app_settings.json'
 PRIVATE_KEY_FILE = './.box/private_key.pem'
 
+
 # Set a service name to use the keyring or set service to None to
 # use the environment to store your credentials
 # If using a service name the json file is removed after the first run
 # Your credentials are now save withouth having them in the code
-SERVICE = 'jwt_demo'
+SERVICE = 'jwt_auth'
 
 
 def get_key(key, service=None):
@@ -111,8 +112,8 @@ def authorize_jwt_client(private_key_file, service=None):
         jwt_key_id=get_key('publickeyid', service),
         access_token=read_token('access_token', service),
         rsa_private_key_file_sys_path=private_key_file,
-        rsa_private_key_passphrase=str(get_key('passphrase', service))\
-                                      .encode('utf_8'),
+        rsa_private_key_passphrase=str(get_key('passphrase',
+                                               service)).encode('utf_8'),
         store_tokens=lambda acc, _: store_token(acc, _, service)
     )
     jwt_auth.authenticate_instance()
@@ -126,14 +127,10 @@ def main(json_file, private_key_file, service=None):
     init_credentials(json_file, private_key_file, service)
     client = authorize_jwt_client(private_key_file, service)
     current_user = client.user(user_id='me').get()
-    print('Box User:', current_user.name)
-    users = client.users()
-    print(users)
-    user = users[0]
-    print(user.id, user.login, user.created_at)
-    files = client.as_user(user).folder(0).get_items(10)
-    for file in files:
-        print(file.id, file.name)
+    print('Successfully authenticated as Box user:',
+          current_user.name,
+          'email:',
+          current_user.login)
 
 
 if __name__ == '__main__':
