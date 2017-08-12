@@ -69,13 +69,6 @@ def store_json(data, service, key_path):
             set_key(key, value, service)
 
 
-def read_token(key, service=None):
-    '''
-    Reads the access token from keyring
-    '''
-    return get_key(key, service)
-
-
 def store_token(access_token, _, service=None):
     '''
     Callback function for storage of the access token
@@ -110,7 +103,7 @@ def authorize_jwt_client(private_key_file, service=None):
         client_secret=get_key('clientsecret', service),
         enterprise_id=get_key('enterpriseid', service),
         jwt_key_id=get_key('publickeyid', service),
-        access_token=read_token('access_token', service),
+        access_token=get_key('access_token', service=None),
         rsa_private_key_file_sys_path=private_key_file,
         rsa_private_key_passphrase=str(get_key('passphrase',
                                                service)).encode('utf_8'),
@@ -127,6 +120,7 @@ def main(json_file, private_key_file, service=None):
     init_credentials(json_file, private_key_file, service)
     client = authorize_jwt_client(private_key_file, service)
     current_user = client.user(user_id='me').get()
+    current_user.name 
     print('Successfully authenticated as Box user:',
           current_user.name,
           'email:',
