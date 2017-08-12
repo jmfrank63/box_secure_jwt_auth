@@ -33,6 +33,13 @@
    
 
 
+### Jason Web Token Authorization
 
-This is a simple application to demonstrate the box api capabilities.
-The example logs into box with JWT Auth.
+This is a simple application to demonstrate the box api enterprise authorization.
+The example logs into box with JWT Auth avoiding putting your
+credentials in the code.
+
+### Usage
+
+Download the application configuration and the private key and put them
+either into a .box directory or adjust the path set in the code.
