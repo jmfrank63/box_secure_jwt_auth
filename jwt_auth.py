@@ -85,8 +85,6 @@ def init_credentials(json_path, private_key_file, service=None):
         with open(json_path, 'r') as json_file:
             json_data = json.load(json_file)
             store_json(json_data, service, private_key_file)
-        if service:
-            os.remove(json_path)
     else:
         # No credentials are available
         if service is None or get_key('clientid', service) is None:
