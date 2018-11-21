@@ -33,13 +33,32 @@
    
 
 
-### Jason Web Token Authorization
-
+### Json Web Token Authorization
 This is a simple application to demonstrate the box api enterprise authorization.
 The example logs into box with JWT Auth avoiding putting your
 credentials in the code.
 
-### Usage
+## Installation
+Clone the repository and create a virtual environmet for your folder.
+Run `pip install -r requirements.txt`
+If you want to update all packages to the latest version
+you can install pipdate via pip and run pipdate on the requirements.
+`pip install pipdate`
+`pipdata -rrequirements.txt`
 
-Download the application configuration and the private key and put them
-either into a .box directory or adjust the path set in the code.
+## Usage
+
+Download the application json file in your development console. Put the configuration in a 
+`.box` folder and name it app_configuration.json.
+If your configuration contains your private key you are all set. If your private key is external,
+put it in the same `.box` folder and name it private_key.pem.
+
+## Secureing your credentials
+
+The example is not production ready. The keyring used is a simple plain textfile and
+does not ahve any security. Keyring however gives you access to various secure methods
+of storing your credentials.
+
+## Python version
+The example is only tested against python3. For python2 some types might have to be changed
+but for newer developments python3 is anyway strongly recommened.
