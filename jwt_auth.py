@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
-Populates the environment variables from a json file
+Populates the environment variables or a keyring from a json file
 and authenticates via Jason Web Token
 '''
 
@@ -14,7 +14,6 @@ from boxsdk import JWTAuth, Client
 
 JSON_FILE = './.box/app_settings.json'
 PRIVATE_KEY_FILE = './.box/private_key.pem'
-
 
 # Set a service name to use the keyring or set service to None to
 # use the environment to store your credentials
@@ -105,8 +104,7 @@ def authorize_jwt_client(private_key_file, service=None):
         rsa_private_key_file_sys_path=private_key_file,
         rsa_private_key_passphrase=str(get_key('passphrase',
                                                service)).encode('utf_8'),
-        store_tokens=lambda acc, _: store_token(acc, _, service)
-    )
+        store_tokens=lambda acc, _: store_token(acc, _, service))
     jwt_auth.authenticate_instance()
     return Client(jwt_auth)
 
@@ -118,11 +116,8 @@ def main(json_file, private_key_file, service=None):
     init_credentials(json_file, private_key_file, service)
     client = authorize_jwt_client(private_key_file, service)
     current_user = client.user(user_id='me').get()
-    current_user.name 
-    print('Successfully authenticated as Box user:',
-          current_user.name,
-          'email:',
-          current_user.login)
+    print('Successfully authenticated as Box user: {} with email: {}'.format(
+        current_user.name, current_user.login))
 
 
 if __name__ == '__main__':
